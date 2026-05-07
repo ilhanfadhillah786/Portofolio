@@ -1,606 +1,539 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ilhan Surya Fadhillah | Industrial Engineer</title>
+    <title>Ilhan Surya Fadhillah | Industrial Engineer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
-    <!-- AOS Animation CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ind-orange: #ff5722;
-            --ind-dark: #111827;
-            --ind-gray: #374151;
-            --ind-light: #f8fafc;
+            --bg-dark: #050507;
+            --card-dark: #0e0e12;
+            --blue-glow: rgba(37, 99, 235, 0.4);
         }
+
+        /* Light Mode Variables */
+        .light {
+            --bg-dark: #f8fafc;
+            --card-dark: #ffffff;
+            --blue-glow: rgba(37, 99, 235, 0.1);
+        }
+        
+        .light body {
+            background-color: var(--bg-dark);
+            color: #1e293b;
+        }
+
+        .light .card-neo {
+            background: #ffffff;
+            border-color: rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+        }
+
+        .light .text-white { color: #0f172a !important; }
+        .light .text-slate-400 { color: #64748b !important; }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--ind-light);
-            color: var(--ind-dark);
-            scroll-behavior: smooth;
             overflow-x: hidden;
-        }
-        .font-industrial {
-            font-family: 'Barlow Condensed', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .hero-bg {
-            background: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.9)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        
-        /* Accents & Borders */
-        .border-l-orange { border-left: 4px solid var(--ind-orange); }
-        .text-orange-custom { color: var(--ind-orange); }
-        .bg-orange-custom { background-color: var(--ind-orange); }
-        
-        .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border-bottom: 4px solid var(--ind-orange);
+            background-color: var(--bg-dark);
+            color: #cbd5e1;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Timeline CSS */
-        .timeline-container { position: relative; padding-left: 2rem; border-left: 2px solid #e5e7eb; }
-        .timeline-dot {
-            position: absolute; left: -0.45rem; top: 0;
-            width: 1rem; height: 1rem;
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Background & Text Animations */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .reveal-text {
+            background: linear-gradient(90deg, #3b82f6, #06b6d4, #3b82f6);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+
+        .text-glitch:hover {
+            text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9;
+            animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
+        }
+
+        .scan-line-effect {
+            background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.1) 50%);
+            background-size: 100% 4px;
+        }
+
+        .cursor-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            width: 600px;
+            height: 600px;
             border-radius: 50%;
-            background-color: var(--ind-orange);
-            border: 3px solid white;
-            box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.2);
+            background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
+            filter: blur(100px);
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
         }
 
-        /* Chart CSS */
-        .bar-chart-container {
-            display: flex; align-items: flex-end; height: 120px; gap: 15px;
-            border-bottom: 2px solid #4b5563; border-left: 2px solid #4b5563;
-            padding-left: 10px; margin-bottom: 25px;
+        .heading-line-scan {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(59, 130, 246, 0.2);
+            overflow: hidden;
         }
-        .bar {
-            width: 50px; background: #374151; position: relative;
-            display: flex; justify-content: center; align-items: flex-start;
-            color: white; font-weight: bold; padding-top: 5px;
-            border-top-left-radius: 4px; border-top-right-radius: 4px;
-            transition: height 1.5s ease-out;
+        .heading-line-scan div {
+            position: absolute;
+            inset: 0;
+            background: #60a5fa;
+            box-shadow: 0 0 10px #60a5fa;
+            transform: translateX(-100%);
+            transition: transform 1s ease-in-out;
         }
-        .bar.optimized { background: var(--ind-orange); }
-        .bar::after {
-            content: attr(data-label); position: absolute; bottom: -25px;
-            color: #9ca3af; font-size: 10px; white-space: nowrap; font-weight: bold;
+        .group:hover .heading-line-scan div {
+            transform: translateX(100%);
         }
 
-        /* Floating Button */
-        .floating-wa {
-            position: fixed; bottom: 30px; right: 30px;
-            background-color: #25d366; color: white;
-            width: 60px; height: 60px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 32px; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
-            z-index: 1000; transition: transform 0.3s;
+        /* Metric Bar Animation */
+        @keyframes growWidth {
+            from { width: 0; }
+            to { width: var(--target-width); }
         }
-        .floating-wa:hover { transform: scale(1.1); }
+        .metric-fill {
+            animation: growWidth 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+        }
+
+        html { scroll-behavior: smooth; }
     </style>
 </head>
-<body>
+<body class="selection:bg-blue-500/30">
+    <div id="cursor" class="cursor-glow"></div>
+    <div class="fixed inset-0 pointer-events-none z-[100] scan-line-effect opacity-10"></div>
 
-    <!-- Header / Navbar -->
-    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm border-b-2 border-[#ff5722]">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="font-industrial text-2xl font-bold tracking-tighter">
-                ILHANSURYA<span class="text-[#ff5722]">FADHILLAH.</span>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-[110] backdrop-blur-md border-b border-white/5 bg-[#050507]/90 dark:bg-[#050507]/90 light:bg-white/90">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center font-mono font-bold text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] text-sm">I</div>
+                <div class="hidden sm:block">
+                    <div class="text-[10px] font-mono leading-none text-blue-500 uppercase">SYS_CORE</div>
+                    <div class="text-xs font-bold tracking-wider uppercase text-white">Ilhan Surya F.</div>
+                </div>
             </div>
-            <div class="hidden md:flex space-x-6 items-center text-xs font-bold uppercase tracking-widest text-gray-700">
-                <a href="#about" class="hover:text-[#ff5722] transition">Profil</a>
-                <a href="#experience" class="hover:text-[#ff5722] transition">Pengalaman</a>
-                <a href="#education" class="hover:text-[#ff5722] transition">Pendidikan</a>
-                <a href="#skills" class="hover:text-[#ff5722] transition">Keahlian</a>
-                <a href="#contact" class="hover:text-[#ff5722] transition">Kontak</a>
-                <a href="CV ILHAN SURYA FADHILLAH INDO.pdf" target="_blank" class="bg-gray-900 text-white px-4 py-2 hover:bg-[#ff5722] transition rounded-sm flex items-center gap-2">
-                    <i class="fas fa-download"></i> CV
-                </a>
-            </div>
-            <div class="md:hidden">
-                <i class="fas fa-bars text-2xl"></i>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex gap-8 text-[10px] font-mono uppercase tracking-widest text-slate-500">
+                    <a href="#engineering" class="hover:text-blue-500 transition-colors">Experience</a>
+                    <a href="#leadership" class="hover:text-blue-500 transition-colors">Org</a>
+                    <a href="#skills" class="hover:text-blue-500 transition-colors">Skill</a>
+                    <a href="#collab" class="hover:text-blue-500 transition-colors font-bold text-blue-400">Hire</a>
+                </div>
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleTheme()" class="p-2 rounded-lg bg-white/5 border border-white/10 text-white hover:border-blue-500 transition-all">
+                    <i id="theme-icon" data-lucide="sun" class="w-4 h-4"></i>
+                </button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-bg min-h-screen flex items-center pt-20">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-8 items-center w-full">
-            <div class="md:col-span-7 text-white" data-aos="fade-right" data-aos-duration="1000">
-                <div class="inline-block bg-[#ff5722] text-white px-3 py-1 font-bold text-[10px] uppercase tracking-[0.2em] mb-4">Industrial Engineering Professional</div>
-                <h1 class="font-industrial text-5xl md:text-7xl lg:text-8xl leading-none mb-4">
-                    REKAYASA <br><span class="text-[#ff5722]">& OPTIMASI</span>
-                </h1>
-                <p class="text-gray-300 text-base md:text-lg mb-8 max-w-xl border-l-4 border-[#ff5722] pl-4 font-light leading-relaxed">
-                    Saya membantu perusahaan manufaktur menghilangkan bottleneck dan menekan angka defect. Berfokus pada <strong>Continuous Improvement, PPIC, dan Quality Control</strong> berbasis data.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#contact" class="bg-[#ff5722] hover:bg-orange-700 text-white px-8 py-4 font-bold uppercase tracking-widest text-xs transition flex items-center gap-2 shadow-lg shadow-orange-500/30">
-                        Pekerjakan Saya <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <a href="CV ILHAN SURYA FADHILLAH INDO.pdf" target="_blank" class="bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white hover:text-black text-white px-8 py-4 font-bold uppercase tracking-widest text-xs transition flex items-center gap-2">
-                        <i class="fas fa-file-pdf"></i> Lihat PDF CV
-                    </a>
-                </div>
+    <main class="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-20">
+        <!-- Progress Header -->
+        <div class="mb-12">
+            <div class="flex justify-between text-[10px] font-mono mb-2 tracking-tighter text-blue-500">
+                <span>TERMINAL_ACTIVE: STABLE</span>
+                <span>SYSTEM_STATUS: ALL_SYSTEMS_GO</span>
             </div>
-            
-            <!-- Graphic/Stats Overlay in Hero -->
-            <div class="hidden md:block md:col-span-5" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-                <div class="bg-white/10 backdrop-blur-md p-8 border border-white/20 rounded-lg shadow-2xl relative">
-                    <div class="absolute -top-5 -right-5 bg-[#ff5722] w-14 h-14 flex items-center justify-center rounded-full shadow-lg">
-                        <i class="fas fa-bolt text-white text-2xl"></i>
-                    </div>
-                    <h3 class="font-industrial text-2xl text-white mb-6 tracking-wide">OPERATIONAL IMPACT</h3>
-                    
-                    <div class="grid grid-cols-2 gap-6 mb-8 border-b border-gray-600 pb-6">
-                        <div>
-                            <p class="text-5xl font-bold text-[#ff5722] font-industrial">21</p>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold mt-1">Ide Kaizen Diusulkan</p>
-                        </div>
-                        <div>
-                            <p class="text-5xl font-bold text-[#ff5722] font-industrial">10</p>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold mt-1">Berhasil Diimplementasi</p>
-                        </div>
-                    </div>
-
-                    <!-- CSS Chart showing Cycle Time Reduction -->
-                    <div>
-                        <p class="text-[10px] text-gray-300 mb-2 font-bold uppercase tracking-wider flex justify-between">
-                            <span>Efisiensi Cycle Time (Packaging)</span>
-                            <span class="text-green-400"><i class="fas fa-arrow-down"></i> 20%</span>
-                        </p>
-                        <div class="bar-chart-container">
-                            <div class="bar h-[100px]" data-label="Sebelum">100%</div>
-                            <div class="bar optimized h-[80px]" data-label="Sesudah">80%</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="h-[1px] w-full bg-white/5 relative">
+                <div class="absolute top-0 left-0 h-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,1)] w-full animate-pulse"></div>
             </div>
         </div>
-    </section>
 
-    <!-- Data Dashboard Bar -->
-    <section class="bg-gray-900 border-b-4 border-[#ff5722]">
-        <div class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-x divide-gray-700">
-            <div data-aos="zoom-in" data-aos-delay="100">
-                <p class="text-3xl font-industrial font-bold text-white">3.52 <span class="text-sm text-gray-500">/4.00</span></p>
-                <p class="text-[10px] text-[#ff5722] font-bold uppercase tracking-widest mt-1">IPK Akademik</p>
-            </div>
-            <div data-aos="zoom-in" data-aos-delay="200">
-                <p class="text-3xl font-industrial font-bold text-white">±50</p>
-                <p class="text-[10px] text-[#ff5722] font-bold uppercase tracking-widest mt-1">Manload Analysis (Orang)</p>
-            </div>
-            <div data-aos="zoom-in" data-aos-delay="300">
-                <p class="text-3xl font-industrial font-bold text-white">±5.000</p>
-                <p class="text-[10px] text-[#ff5722] font-bold uppercase tracking-widest mt-1">Inspeksi Produk/Hari</p>
-            </div>
-            <div data-aos="zoom-in" data-aos-delay="400">
-                <p class="text-3xl font-industrial font-bold text-white">19%</p>
-                <p class="text-[10px] text-[#ff5722] font-bold uppercase tracking-widest mt-1">Reduksi Defect (INKA)</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Profile & Career Interest -->
-    <section id="about" class="py-24 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-12 items-center">
-            <div class="md:col-span-7" data-aos="fade-right">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="w-12 h-1 bg-[#ff5722]"></div>
-                    <h2 class="font-industrial text-4xl text-gray-900">TENTANG SAYA</h2>
+        <!-- Hero Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-32 items-center">
+            <div class="lg:col-span-7 space-y-8">
+                <div class="inline-flex items-center gap-2 px-3 py-1 text-[10px] font-mono rounded border bg-blue-500/10 border-blue-500/20 text-blue-400">
+                    <i data-lucide="terminal" class="w-3 h-3"></i> UID: ILHAN_SURYA_2026
                 </div>
-                <p class="text-gray-600 leading-relaxed mb-6 text-justify text-sm md:text-base">
-                    Lulusan Teknik Industri dari <strong>Universitas Muhammadiyah Surakarta</strong>. Memiliki pengalaman komprehensif sebagai <i>Management Trainee (Operations & Continuous Improvement)</i> di industri manufaktur. Saya terbiasa menganalisis proses pada area produksi, warehouse, dan delivery untuk memecahkan masalah (bottleneck) serta meningkatkan efektivitas operasional.
-                </p>
-                <p class="text-gray-600 leading-relaxed mb-8 text-justify text-sm md:text-base">
-                    Keputusan berbasis data adalah fondasi saya. Menggunakan alat seperti <strong>Lean Manufacturing, Kaizen, 7QC Tools, dan FMEA</strong>, saya berdedikasi untuk menciptakan budaya perbaikan berkelanjutan di lingkungan kerja.
+                
+                <div class="relative group cursor-default">
+                    <h1 class="text-6xl md:text-8xl font-black leading-[0.85] tracking-tighter uppercase italic text-white transition-all duration-500 group-hover:scale-[1.02]">
+                        <span class="inline-block hover:text-blue-500 transition-colors">Industrial</span> <br />
+                        <span class="relative inline-block reveal-text text-glitch">
+                            Excellence
+                            <div class="heading-line-scan"><div></div></div>
+                        </span>
+                    </h1>
+                </div>
+
+                <p class="text-lg max-w-xl font-light leading-relaxed border-l-2 pl-6 text-slate-400 border-blue-600/30">
+                    Lulusan Teknik Industri UMS dengan keahlian dalam optimasi manufaktur, penjaminan kualitas (QA/QC), dan perbaikan berkelanjutan berbasis data menggunakan standar ISO 9001:2015, SNI, dan TKDN.
                 </p>
                 
-                <h4 class="font-bold text-sm uppercase tracking-widest mb-4 text-gray-900"><i class="fas fa-crosshairs text-[#ff5722] mr-2"></i> Bidang Minat Karir</h4>
-                <div class="flex flex-wrap gap-2 mb-8">
-                    <span class="bg-gray-100 border border-gray-200 text-gray-700 px-4 py-2 text-xs font-bold uppercase rounded-full">Produksi</span>
-                    <span class="bg-gray-100 border border-gray-200 text-gray-700 px-4 py-2 text-xs font-bold uppercase rounded-full">Supply Chain (SCM)</span>
-                    <span class="bg-gray-100 border border-gray-200 text-gray-700 px-4 py-2 text-xs font-bold uppercase rounded-full">PPIC</span>
-                    <span class="bg-gray-100 border border-gray-200 text-gray-700 px-4 py-2 text-xs font-bold uppercase rounded-full">QC/QA</span>
-                    <span class="bg-gray-100 border border-gray-200 text-gray-700 px-4 py-2 text-xs font-bold uppercase rounded-full">Project Management</span>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="mailto:ilhanfadhillahh@gmail.com" class="px-6 py-3 bg-blue-600 text-white font-bold rounded flex items-center gap-3 hover:bg-blue-500 transition-all text-xs tracking-widest uppercase shadow-lg shadow-blue-500/20">
+                        Kirim Email <i data-lucide="mail" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://wa.me/6285648531884" target="_blank" class="px-6 py-3 bg-emerald-600 text-white font-bold rounded flex items-center gap-3 hover:bg-emerald-500 transition-all text-xs tracking-widest uppercase shadow-lg shadow-emerald-500/10">
+                        WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    </a>
+                    <!-- LinkedIn Button with Icon -->
+                    <a href="https://www.linkedin.com/in/Ilhanfadhillah" target="_blank" class="px-6 py-3 bg-[#0077B5] text-white font-bold rounded flex items-center gap-3 hover:bg-[#005a8d] transition-all text-xs tracking-widest uppercase shadow-lg shadow-blue-900/30">
+                        LinkedIn <i data-lucide="linkedin" class="w-4 h-4"></i>
+                    </a>
                 </div>
             </div>
-            <div class="md:col-span-5 relative" data-aos="fade-left">
-                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070" alt="Industrial Engineer" class="w-full h-auto rounded-lg shadow-2xl grayscale hover:grayscale-0 transition duration-700">
-                <div class="absolute -bottom-8 -left-8 bg-gray-900 text-white p-6 shadow-xl border-t-4 border-[#ff5722] hidden md:block">
-                    <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Motto Kerja</p>
-                    <p class="font-bold text-sm italic">"Siap bekerja sesuai arahan<br>dan target yang presisi."</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Experience Timeline -->
-    <section id="experience" class="py-24 bg-gray-50 border-y border-gray-200">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="font-industrial text-5xl font-bold">PENGALAMAN <span class="text-[#ff5722]">PROFESIONAL</span></h2>
-                <p class="text-gray-500 mt-3 text-sm">Rekam jejak teknis di industri manufaktur dan organisasi.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-12">
-                <!-- Pekerjaan -->
-                <div data-aos="fade-right">
-                    <h3 class="font-bold text-2xl mb-8 flex items-center gap-3"><i class="fas fa-briefcase text-[#ff5722]"></i> Riwayat Pekerjaan</h3>
-                    
-                    <div class="timeline-container pb-8">
-                        <div class="timeline-dot"></div>
-                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-white inline-block px-2 py-1 rounded shadow-sm border mb-2">Des 2025 - Apr 2026</p>
-                        <h4 class="text-xl font-bold">MT (Operations & CI)</h4>
-                        <p class="text-[#ff5722] text-sm font-bold mb-3">PT Kadelmindo Saraya Mapan</p>
-                        <ul class="text-sm text-gray-600 space-y-2 list-none">
-                            <li class="flex items-start"><i class="fas fa-caret-right text-[#ff5722] mt-1 mr-2"></i> Melakukan observasi & analisis bottleneck pada QC, Warehouse, dan Delivery.</li>
-                            <li class="flex items-start"><i class="fas fa-caret-right text-[#ff5722] mt-1 mr-2"></i> Analisis manload untuk ±50 karyawan lintas divisi.</li>
-                            <li class="flex items-start"><i class="fas fa-caret-right text-[#ff5722] mt-1 mr-2"></i> Mengimplementasikan 10 dari 21 ide Kaizen, mereduksi cycle time packaging 20%.</li>
-                        </ul>
+            <!-- Impact Metrics Box -->
+            <div class="lg:col-span-5">
+                <div class="p-8 rounded-[2rem] border bg-[#0e0e12] border-white/5 relative overflow-hidden group shadow-2xl card-neo">
+                    <div class="absolute inset-0 pointer-events-none">
+                        <div class="w-full h-[100px] bg-gradient-to-b from-transparent via-blue-500/5 to-transparent animate-[scanline_4s_linear_infinite]"></div>
                     </div>
-
-                    <div class="timeline-container pb-8">
-                        <div class="timeline-dot"></div>
-                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-white inline-block px-2 py-1 rounded shadow-sm border mb-2">Okt 2024 - Mar 2025</p>
-                        <h4 class="text-xl font-bold">Pengendalian Kualitas (QC)</h4>
-                        <p class="text-[#ff5722] text-sm font-bold mb-3">PT Sinar Semesta</p>
-                        <ul class="text-sm text-gray-600 space-y-2 list-none">
-                            <li class="flex items-start"><i class="fas fa-caret-right text-[#ff5722] mt-1 mr-2"></i> Inspeksi harian ±5.000 produk pengecoran logam dengan checksheet standar.</li>
-                            <li class="flex items-start"><i class="fas fa-caret-right text-[#ff5722] mt-1 mr-2"></i> Analisis SQC dan FMEA untuk mendeteksi 33% potensi cacat produksi.</li>
-                        </ul>
-                    </div>
-
-                    <div class="timeline-container">
-                        <div class="timeline-dot"></div>
-                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-white inline-block px-2 py-1 rounded shadow-sm border mb-2">Jul - Sep 2024</p>
-                        <h4 class="text-xl font-bold">Pengendalian Operasi</h4>
-                        <p class="text-[#ff5722] text-sm font-bold mb-3">PT INKA (Persero)</p>
-                        <ul class="text-sm text-gray-600 space-y-2 list-none">
-                            <li class="flex items-start"><i class="fas fa-caret-right text-[#ff5722] mt-1 mr-2"></i> Analisis produk Sidewall menggunakan 7 QC Tools.</li>
-                            <li class="flex items-start"><i class="fas fa-caret-right text-[#ff5722] mt-1 mr-2"></i> Menyusun 26 rekomendasi perbaikan untuk menekan potensi defect 19%.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Organisasi -->
-                <div data-aos="fade-left">
-                    <h3 class="font-bold text-2xl mb-8 flex items-center gap-3"><i class="fas fa-users text-[#ff5722]"></i> Kepemimpinan & Organisasi</h3>
-                    
-                    <div class="bg-white p-6 border-l-4 border-gray-800 shadow-sm mb-6 card-hover">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-lg">Ketua Komunitas</h4>
-                            <span class="text-[10px] font-bold bg-gray-100 text-gray-600 px-2 py-1 rounded">2022 - 2023</span>
-                        </div>
-                        <p class="text-[#ff5722] text-xs font-bold uppercase tracking-widest mb-3">Industrial Literature Community (ILCO)</p>
-                        <p class="text-sm text-gray-600">Meningkatkan partisipasi kegiatan literasi industri hingga 30% dan mengelola kolaborasi dengan 3 pembicara ahli dalam diskusi ilmiah.</p>
-                    </div>
-
-                    <div class="bg-white p-6 border-l-4 border-gray-800 shadow-sm mb-6 card-hover">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-lg">Staff Ilmu Pengetahuan & Teknologi</h4>
-                            <span class="text-[10px] font-bold bg-gray-100 text-gray-600 px-2 py-1 rounded">2022 - 2023</span>
-                        </div>
-                        <p class="text-[#ff5722] text-xs font-bold uppercase tracking-widest mb-3">KMTI (Keluarga Mahasiswa Teknik Industri)</p>
-                        <p class="text-sm text-gray-600">Menjalin kerjasama strategis dengan lebih dari 10 perusahaan untuk integrasi program kerja edukatif.</p>
-                    </div>
-
-                    <div class="bg-white p-6 border-l-4 border-gray-800 shadow-sm card-hover">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-lg">Organization Development</h4>
-                        </div>
-                        <p class="text-[#ff5722] text-xs font-bold uppercase tracking-widest mb-3">KAMI Foundation</p>
-                        <p class="text-sm text-gray-600">Meningkatkan kepuasan partisipan sebesar 20% lewat evaluasi dan manajemen operasional acara yang sistematis.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education & Certifications (NEW) -->
-    <section id="education" class="py-24 bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16">
-                <!-- Education -->
-                <div data-aos="fade-up">
-                    <h2 class="font-industrial text-4xl mb-8 flex items-center gap-3">
-                        <i class="fas fa-graduation-cap text-[#ff5722]"></i> LATAR PENDIDIKAN
-                    </h2>
-                    
-                    <div class="relative pl-6 border-l-2 border-gray-700 mb-8">
-                        <div class="absolute w-4 h-4 bg-[#ff5722] rounded-full -left-[9px] top-1"></div>
-                        <h4 class="text-2xl font-bold">Universitas Muhammadiyah Surakarta</h4>
-                        <p class="text-gray-400 text-sm mb-2">S-1 Teknik Industri (2021 - 2025)</p>
-                        <p class="inline-block bg-gray-800 text-white px-3 py-1 text-sm font-bold rounded shadow border border-gray-600">IPK: 3.52 / 4.00</p>
-                    </div>
-                    
-                    <div class="relative pl-6 border-l-2 border-gray-700">
-                        <div class="absolute w-4 h-4 bg-gray-600 rounded-full -left-[9px] top-1"></div>
-                        <h4 class="text-xl font-bold">SMA Muhammadiyah 2 Genteng</h4>
-                        <p class="text-gray-400 text-sm mb-2">Ilmu Pengetahuan Alam (2017 - 2020)</p>
-                        <p class="text-gray-400 text-sm">Nilai Akhir: 82.8 / 100</p>
-                    </div>
-                </div>
-
-                <!-- Certifications -->
-                <div data-aos="fade-up" data-aos-delay="200">
-                    <h2 class="font-industrial text-4xl mb-8 flex items-center gap-3">
-                        <i class="fas fa-certificate text-[#ff5722]"></i> SERTIFIKASI
-                    </h2>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div class="bg-gray-800 p-6 rounded-lg border-t-4 border-[#ff5722] hover:bg-gray-700 transition">
-                            <i class="fas fa-microchip text-3xl text-gray-500 mb-4"></i>
-                            <h4 class="font-bold text-lg mb-1">PLC Otomasi Industri</h4>
-                            <p class="text-xs text-gray-400 mb-3">Universitas Muhammadiyah Surakarta (13 Jam)</p>
-                            <p class="text-[#ff5722] font-industrial text-2xl font-bold">GRADE A</p>
-                        </div>
-                        <div class="bg-gray-800 p-6 rounded-lg border-t-4 border-blue-500 hover:bg-gray-700 transition">
-                            <i class="fas fa-cube text-3xl text-gray-500 mb-4"></i>
-                            <h4 class="font-bold text-lg mb-1">Solidworks Training</h4>
-                            <p class="text-xs text-gray-400 mb-3">Pelatihan Gambar Teknik 3D</p>
-                            <p class="text-blue-400 font-industrial text-2xl font-bold">13 HOURS</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comprehensive Skills Section -->
-    <section id="skills" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="font-industrial text-5xl font-bold">PETA <span class="text-[#ff5722]">KOMPETENSI</span></h2>
-                <p class="text-gray-500 mt-3 text-sm">Integrasi antara analisis data lapangan dan manajemen tim.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-16">
-                <!-- Hard Skills (Bars) -->
-                <div data-aos="fade-right">
-                    <h3 class="font-bold text-2xl mb-8 border-b-2 border-gray-100 pb-2">Hard Skills & Teknikal</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between text-xs font-bold uppercase tracking-widest mb-1">
-                                <span>Lean Mfg & Kaizen</span><span class="text-[#ff5722]">95%</span>
+                    <h3 class="text-xs font-mono mb-8 uppercase tracking-widest text-blue-500">Operational Excellence Metrics</h3>
+                    <div class="space-y-6 relative z-10">
+                        <!-- Metric 1: Efficiency -->
+                        <div class="space-y-2 group/metric">
+                            <div class="flex justify-between items-end">
+                                <span class="text-[10px] font-mono uppercase text-slate-500 group-hover/metric:text-blue-400 transition-colors">Efficiency Boost</span>
+                                <span class="text-2xl font-black text-white">20%</span>
                             </div>
-                            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-                                <div class="bg-[#ff5722] h-full rounded-full" style="width: 95%"></div>
+                            <div class="h-[6px] w-full bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-500 metric-fill shadow-[0_0_10px_#3b82f6]" style="--target-width: 20%;"></div>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between text-xs font-bold uppercase tracking-widest mb-1">
-                                <span>QC (SQC, FMEA, 7Tools)</span><span class="text-[#ff5722]">90%</span>
+                        <!-- Metric 2: PT INKA -->
+                        <div class="space-y-2 group/metric">
+                            <div class="flex justify-between items-end">
+                                <span class="text-[10px] font-mono uppercase text-slate-500 group-hover/metric:text-blue-400 transition-colors">Defect Reduction (PT INKA)</span>
+                                <span class="text-2xl font-black text-white">19%</span>
                             </div>
-                            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-                                <div class="bg-gray-800 h-full rounded-full" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-xs font-bold uppercase tracking-widest mb-1">
-                                <span>Time Study & Manload</span><span class="text-[#ff5722]">85%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-                                <div class="bg-gray-800 h-full rounded-full" style="width: 85%"></div>
+                            <div class="h-[6px] w-full bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-400 metric-fill shadow-[0_0_10px_#60a5fa]" style="--target-width: 19%;"></div>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between text-xs font-bold uppercase tracking-widest mb-1">
-                                <span>Supply Chain & PPIC</span><span class="text-[#ff5722]">85%</span>
+                        <!-- Metric 3: Sinar Semesta -->
+                        <div class="space-y-2 group/metric">
+                            <div class="flex justify-between items-end">
+                                <span class="text-[10px] font-mono uppercase text-slate-500 group-hover/metric:text-blue-400 transition-colors">Defect Detection (Sinar Semesta)</span>
+                                <span class="text-2xl font-black text-white">33%</span>
                             </div>
-                            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-                                <div class="bg-gray-800 h-full rounded-full" style="width: 85%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-xs font-bold uppercase tracking-widest mb-1">
-                                <span>Solidworks & Python</span><span class="text-[#ff5722]">75%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-                                <div class="bg-gray-800 h-full rounded-full" style="width: 75%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Soft Skills (Tags/Icons) -->
-                <div data-aos="fade-left">
-                    <h3 class="font-bold text-2xl mb-8 border-b-2 border-gray-100 pb-2">Soft Skills & Manajerial</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="flex items-center gap-3 bg-gray-50 p-4 rounded border border-gray-200">
-                            <i class="fas fa-brain text-2xl text-[#ff5722]"></i>
-                            <div>
-                                <h4 class="font-bold text-sm">Problem Solving</h4>
-                                <p class="text-[10px] text-gray-500 uppercase">Analitis & Taktis</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 bg-gray-50 p-4 rounded border border-gray-200">
-                            <i class="fas fa-users-cog text-2xl text-blue-600"></i>
-                            <div>
-                                <h4 class="font-bold text-sm">Leadership</h4>
-                                <p class="text-[10px] text-gray-500 uppercase">Manajemen Tim</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 bg-gray-50 p-4 rounded border border-gray-200">
-                            <i class="fas fa-comments text-2xl text-green-600"></i>
-                            <div>
-                                <h4 class="font-bold text-sm">Communication</h4>
-                                <p class="text-[10px] text-gray-500 uppercase">Lintas Divisi</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 bg-gray-50 p-4 rounded border border-gray-200">
-                            <i class="fas fa-project-diagram text-2xl text-purple-600"></i>
-                            <div>
-                                <h4 class="font-bold text-sm">Project Mgmt</h4>
-                                <p class="text-[10px] text-gray-500 uppercase">Eksekusi Timeline</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 bg-gray-50 p-4 rounded border border-gray-200">
-                            <i class="fas fa-chart-pie text-2xl text-yellow-500"></i>
-                            <div>
-                                <h4 class="font-bold text-sm">Data Analysis</h4>
-                                <p class="text-[10px] text-gray-500 uppercase">Keputusan Objektif</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 bg-gray-50 p-4 rounded border border-gray-200">
-                            <i class="fas fa-sync-alt text-2xl text-teal-500"></i>
-                            <div>
-                                <h4 class="font-bold text-sm">Adaptability</h4>
-                                <p class="text-[10px] text-gray-500 uppercase">Cepat Belajar</p>
+                            <div class="h-[6px] w-full bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-500 metric-fill shadow-[0_0_10px_#10b981]" style="--target-width: 33%;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact & Connect -->
-    <section id="contact" class="py-24 bg-gray-900 text-white relative">
-        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-        <div class="max-w-6xl mx-auto px-6 relative z-10">
-            <div class="grid md:grid-cols-2 gap-16">
-                <!-- Kontak Info -->
-                <div data-aos="fade-right">
-                    <h2 class="font-industrial text-5xl mb-6">MARI <span class="text-[#ff5722]">BERKOLABORASI.</span></h2>
-                    <p class="text-gray-400 mb-10 leading-relaxed">
-                        Jika Anda mencari individu yang tangguh dalam <strong>pemecahan masalah operasional, analisis data produksi, atau manajemen rantai pasok</strong>, mari jadwalkan diskusi.
+        <!-- Career Experience -->
+        <section id="engineering" class="mb-32">
+            <div class="flex items-center gap-6 mb-16">
+                <h2 class="text-4xl font-black uppercase tracking-tighter italic text-white">Career Deployment</h2>
+                <div class="h-[1px] flex-1 bg-white/5"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- PT Agrindo -->
+                <div class="group p-8 rounded-2xl border bg-[#0e0e12]/50 border-white/5 hover:border-blue-500/30 transition-all card-neo">
+                    <div class="flex justify-between items-start mb-6 font-mono">
+                        <div class="px-2 py-1 text-[10px] uppercase rounded border bg-blue-500/10 text-blue-500 border-blue-500/20">Apr 2026 - Sekarang</div>
+                        <span class="text-[9px] uppercase tracking-widest text-slate-600">Full-time</span>
+                    </div>
+                    <h3 class="text-2xl font-bold uppercase tracking-tight group-hover:text-blue-500 transition-colors text-white">PT Agrindo</h3>
+                    <div class="font-mono text-xs mt-1 uppercase mb-6 text-blue-500 font-bold">Quality Assurance</div>
+                    <ul class="space-y-3 mb-8 text-sm text-slate-400">
+                        <li><span class="text-blue-500 font-bold mr-2">↳</span>Mendukung penerapan ISO 9001:2015, SNI, dan TKDN.</li>
+                        <li><span class="text-blue-500 font-bold mr-2">↳</span>Monitoring 2-4 line produksi harian untuk memastikan output sesuai standar teknis.</li>
+                        <li><span class="text-blue-500 font-bold mr-2">↳</span>Analisis akar masalah produk NG menggunakan metode RCA dan Seven Tools.</li>
+                    </ul>
+                </div>
+                <!-- PT Kadelmindo -->
+                <div class="group p-8 rounded-2xl border bg-[#0e0e12]/50 border-white/5 hover:border-blue-500/30 transition-all card-neo">
+                    <div class="flex justify-between items-start mb-6 font-mono">
+                        <div class="px-2 py-1 text-[10px] uppercase rounded border bg-blue-500/10 text-blue-500 border-blue-500/20">Nov 2025 - Mar 2026</div>
+                        <span class="text-[9px] uppercase tracking-widest text-slate-600">MDP Factory</span>
+                    </div>
+                    <h3 class="text-2xl font-bold uppercase tracking-tight group-hover:text-blue-500 transition-colors text-white">PT Kadelmindo Saraya Mapan</h3>
+                    <div class="font-mono text-xs mt-1 uppercase mb-6 text-blue-500 font-bold">Management Development Program</div>
+                    <ul class="space-y-3 mb-8 text-sm text-slate-400">
+                        <li><span class="text-blue-500 font-bold mr-2">↳</span>Analisis beban kerja (Manload Analysis) terhadap ±50 karyawan.</li>
+                        <li><span class="text-blue-500 font-bold mr-2">↳</span>Identifikasi bottleneck dan optimasi proses packaging & delivery (21 ide improvement).</li>
+                    </ul>
+                </div>
+                <!-- PT Sinar Semesta -->
+                <div class="group p-8 rounded-2xl border bg-[#0e0e12]/50 border-white/5 hover:border-blue-500/30 transition-all card-neo">
+                    <div class="flex justify-between items-start mb-6 font-mono">
+                        <div class="px-2 py-1 text-[10px] uppercase rounded border bg-blue-500/10 text-blue-500 border-blue-500/20">Okt 2024 - Mar 2025</div>
+                        <span class="text-[9px] uppercase tracking-widest text-slate-600">Internship</span>
+                    </div>
+                    <h3 class="text-2xl font-bold uppercase tracking-tight group-hover:text-blue-500 transition-colors text-white">PT Sinar Semesta</h3>
+                    <div class="font-mono text-xs mt-1 uppercase mb-6 text-blue-500 font-bold">Quality Control</div>
+                    <ul class="space-y-3 mb-8 text-sm text-slate-400">
+                        <li><span class="text-blue-500 font-bold mr-2">↳</span>Inspeksi harian 5.000+ unit komponen untuk menjaga integritas produk.</li>
+                        <li><span class="text-blue-500 font-bold mr-2">↳</span>Deteksi dini 33% potensi defect sebelum masuk tahap assembly via SQC.</li>
+                    </ul>
+                </div>
+                <!-- PT INKA -->
+                <div class="group p-8 rounded-2xl border bg-[#0e0e12]/50 border-white/5 hover:border-blue-500/30 transition-all card-neo">
+                    <div class="flex justify-between items-start mb-6 font-mono">
+                        <div class="px-2 py-1 text-[10px] uppercase rounded border bg-blue-500/10 text-blue-500 border-blue-500/20">Jul 2024 - Sep 2024</div>
+                        <span class="text-[9px] uppercase tracking-widest text-slate-600">Internship</span>
+                    </div>
+                    <h3 class="text-2xl font-bold uppercase tracking-tight group-hover:text-blue-500 transition-colors text-white">PT INKA (Persero)</h3>
+                    <div class="font-mono text-xs mt-1 uppercase mb-6 text-blue-500 font-bold">Operational Process Control</div>
+                    <ul class="space-y-3 mb-8 text-sm text-slate-400">
+                        <li><span class="text-blue-500 font-bold mr-2">↳</span>Penurunan tingkat defect sidewall sebesar 19% via standarisasi parameter.</li>
+                        <li><span class="text-blue-500 font-bold mr-2">↳</span>Memberikan 26 rekomendasi perbaikan teknis pada Welding Section.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leadership & Organization -->
+        <section id="leadership" class="mb-32">
+            <div class="flex items-center gap-6 mb-16">
+                <div class="h-[1px] flex-1 bg-white/5"></div>
+                <h2 class="text-4xl font-black uppercase tracking-tighter italic text-white text-right">Leadership Log</h2>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="p-8 rounded-3xl border bg-white/[0.02] border-white/5 hover:bg-white/[0.04] transition-all card-neo">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <div class="text-[10px] font-mono uppercase text-slate-500 tracking-widest">2023 - 2024</div>
+                    </div>
+                    <h3 class="text-xl font-bold uppercase text-white mb-1">Industrial Research Community</h3>
+                    <div class="text-sm font-mono uppercase text-blue-400 mb-4 font-bold">Coordinator</div>
+                    <p class="text-sm text-slate-400 mb-6 italic border-l-2 border-slate-700 pl-4">
+                        Mengkoordinasikan pelatihan riset, diskusi ilmiah, dan publikasi konten edukatif.
                     </p>
-                    
-                    <div class="space-y-6 bg-gray-800 p-8 rounded-lg border border-gray-700">
-                        <a href="https://wa.me/6285648531884" target="_blank" class="flex items-center gap-4 hover:text-[#25d366] transition group">
-                            <div class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center group-hover:bg-[#25d366]/20 border border-gray-700">
-                                <i class="fab fa-whatsapp text-2xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Telepon / WhatsApp</p>
-                                <p class="font-bold text-lg">+62 856-4853-1884</p>
-                            </div>
-                        </a>
-                        
-                        <a href="mailto:ilhanfadhillahh@gmail.com" class="flex items-center gap-4 hover:text-[#ea4335] transition group">
-                            <div class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center group-hover:bg-[#ea4335]/20 border border-gray-700">
-                                <i class="fas fa-envelope text-2xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Email Pribadi</p>
-                                <p class="font-bold text-lg">ilhanfadhillahh@gmail.com</p>
-                            </div>
-                        </a>
-
-                        <div class="flex items-center gap-4 text-gray-300">
-                            <div class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center border border-gray-700">
-                                <i class="fas fa-map-marker-alt text-xl text-[#ff5722]"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Lokasi & Pendidikan</p>
-                                <p class="font-bold text-base">Surakarta, Indonesia</p>
-                            </div>
-                        </div>
+                    <div class="space-y-3 text-[11px] uppercase tracking-tight text-slate-500">
+                        <div class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-500 mt-0.5"></i> Kolaborasi strategis dengan 3 pembicara ahli industri.</div>
+                        <div class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-500 mt-0.5"></i> Peningkatan literasi ilmiah melalui program komunitas berkelanjutan.</div>
                     </div>
                 </div>
-                
-                <!-- Quick Form to WA -->
-                <div data-aos="fade-left">
-                    <div class="bg-white p-8 rounded-lg text-gray-900 shadow-2xl">
-                        <div class="flex items-center justify-between mb-6 border-b pb-4">
-                            <h3 class="font-bold text-2xl uppercase">Kirim Pesan</h3>
-                            <i class="fab fa-whatsapp text-3xl text-[#25d366]"></i>
+                <div class="p-8 rounded-3xl border bg-white/[0.02] border-white/5 hover:bg-white/[0.04] transition-all card-neo">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
+                            <i data-lucide="rocket" class="w-6 h-6"></i>
                         </div>
-                        <form id="contactForm" class="space-y-5">
-                            <div>
-                                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Nama Anda / Rekrutmen</label>
-                                <input type="text" id="senderName" class="w-full bg-gray-50 border border-gray-300 p-4 rounded outline-none focus:border-[#ff5722] transition" placeholder="Contoh: HR PT Mayora" required>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Posisi / Tawaran (Opsional)</label>
-                                <select id="senderRole" class="w-full bg-gray-50 border border-gray-300 p-4 rounded outline-none focus:border-[#ff5722] transition cursor-pointer">
-                                    <option value="Tawaran Umum">Tawaran Umum</option>
-                                    <option value="Posisi Produksi / Operations">Posisi Produksi / Operations</option>
-                                    <option value="Posisi PPIC / Supply Chain">Posisi PPIC / Supply Chain</option>
-                                    <option value="Posisi Quality Control / QA">Posisi Quality Control / QA</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Pesan Singkat</label>
-                                <textarea id="senderMsg" rows="3" class="w-full bg-gray-50 border border-gray-300 p-4 rounded outline-none focus:border-[#ff5722] transition" placeholder="Tuliskan pesan Anda untuk saya..." required></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-[#ff5722] hover:bg-orange-700 text-white font-bold py-4 rounded uppercase tracking-widest text-sm transition shadow-lg flex justify-center items-center gap-2">
-                                Buka di WhatsApp <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </form>
+                        <div class="text-[10px] font-mono uppercase text-slate-500 tracking-widest">2022 - 2023</div>
+                    </div>
+                    <h3 class="text-xl font-bold uppercase text-white mb-1">Keluarga Mahasiswa Teknik Industri</h3>
+                    <div class="text-sm font-mono uppercase text-blue-400 mb-4 font-bold">Staff Ilmu Pengetahuan & Teknologi</div>
+                    <p class="text-sm text-slate-400 mb-6 italic border-l-2 border-slate-700 pl-4">
+                        Integrasi program edukatif dan pengembangan kemitraan industri eksternal.
+                    </p>
+                    <div class="space-y-3 text-[11px] uppercase tracking-tight text-slate-500">
+                        <div class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-500 mt-0.5"></i> Kerjasama strategis dengan lebih dari 10 perusahaan manufaktur.</div>
+                        <div class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-500 mt-0.5"></i> Kolaborasi lintas divisi untuk program pengembangan soft-skill.</div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer with Social Icons -->
-    <footer class="bg-[#0b1120] text-center py-12 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+        <!-- Skill Matrix -->
+        <section id="skills" class="mb-32">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 items-start">
+                <div class="lg:col-span-1">
+                    <h2 class="text-4xl font-black uppercase italic text-white">Skill Matrix</h2>
+                    <div class="mt-6 p-5 rounded-2xl border bg-emerald-500/5 border-emerald-500/10">
+                        <div class="flex items-center gap-2 text-emerald-600 mb-2">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            <span class="text-[10px] font-mono uppercase font-bold tracking-widest">Certified</span>
+                        </div>
+                        <div class="text-xs font-bold text-white uppercase">BNSP SCM - Pengelolaan Produksi</div>
+                        <div class="text-[9px] font-mono mt-1 uppercase text-slate-500">Valid 2026-2029</div>
+                    </div>
+                </div>
+                <div class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-8">
+                    <div class="space-y-6">
+                        <div class="font-mono text-[10px] uppercase text-blue-500 flex items-center gap-2">
+                            <i data-lucide="cpu" class="w-4 h-4"></i> Operasional
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">Production Monitoring</span>
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">PPIC Fundamental</span>
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">Lean Manufacturing</span>
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">Kaizen</span>
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">Manload Analysis</span>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="font-mono text-[10px] uppercase text-purple-500 flex items-center gap-2">
+                            <i data-lucide="microscope" class="w-4 h-4"></i> Quality
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">ISO 9001:2015</span>
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">SNI & TKDN</span>
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">Seven Tools & RCA</span>
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">SQC & FMEA</span>
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">OEE Analysis</span>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="font-mono text-[10px] uppercase text-amber-500 flex items-center gap-2">
+                            <i data-lucide="database" class="w-4 h-4"></i> Tools
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">Advanced MS Excel</span>
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">SAP System</span>
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">Data Analysis</span>
+                            <span class="px-2 py-1 border border-white/5 rounded-lg text-[10px] bg-white/5">AutoCAD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements -->
+        <section class="mb-32">
+            <div class="p-12 rounded-[3rem] border border-white/5 bg-gradient-to-br from-blue-600/10 to-transparent card-neo">
+                <h2 class="text-3xl font-black uppercase mb-12 tracking-tight flex items-center gap-4 text-white">
+                    <i data-lucide="award" class="text-amber-500"></i> Honors & Achievements
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-8 rounded-2xl border border-white/5 bg-[#050507] text-center hover:border-amber-500/30 transition-all card-neo">
+                        <i data-lucide="award" class="w-8 h-8 text-amber-500 mx-auto mb-4"></i>
+                        <h4 class="font-bold text-sm uppercase text-white mb-2">Juara 1 - Most Valuable Product</h4>
+                        <div class="text-[10px] font-mono uppercase text-blue-500 mb-2">Industrial Kreatif UMS 2024</div>
+                    </div>
+                    <div class="p-8 rounded-2xl border border-white/5 bg-[#050507] text-center hover:border-blue-500/30 transition-all card-neo">
+                        <i data-lucide="medal" class="w-8 h-8 text-blue-400 mx-auto mb-4"></i>
+                        <h4 class="font-bold text-sm uppercase text-white mb-2">Finalis Desain Nasional</h4>
+                        <div class="text-[10px] font-mono uppercase text-blue-500 mb-2">Industrial National Design Competitions</div>
+                    </div>
+                    <div class="p-8 rounded-2xl border border-white/5 bg-[#050507] text-center hover:border-emerald-500/30 transition-all card-neo">
+                        <i data-lucide="trending-up" class="w-8 h-8 text-emerald-400 mx-auto mb-4"></i>
+                        <h4 class="font-bold text-sm uppercase text-white mb-2">Wirausaha Merdeka</h4>
+                        <div class="text-[10px] font-mono uppercase text-blue-500 mb-2">Lolos Pendanaan Kampus Merdeka</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="collab" class="mb-32 scroll-mt-24">
+            <div class="max-w-4xl mx-auto p-10 rounded-[2rem] border bg-[#0e0e12] border-white/5 shadow-2xl relative overflow-hidden card-neo">
+                <div class="absolute top-0 right-0 p-8 opacity-10">
+                    <i data-lucide="send" class="w-24 h-24 text-blue-500"></i>
+                </div>
+                <h2 class="text-3xl font-black uppercase mb-8 text-white">Collaboration Hub</h2>
+                <form onsubmit="sendWhatsApp(event)" class="space-y-6 relative z-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="text-[9px] font-mono uppercase text-blue-500 block mb-2 tracking-widest font-bold">Nama Lengkap</label>
+                            <input id="name" required type="text" placeholder="Masukkan nama Anda" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-xs outline-none focus:border-blue-500 text-white transition-all">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-mono uppercase text-blue-500 block mb-2 tracking-widest font-bold">Perusahaan / Instansi</label>
+                            <input id="company" required type="text" placeholder="Nama organisasi" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-xs outline-none focus:border-blue-500 text-white transition-all">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-mono uppercase text-blue-500 block mb-2 tracking-widest font-bold">Pesan Strategis</label>
+                        <textarea id="message" required rows="4" placeholder="Detail kolaborasi atau pertanyaan..." class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-xs outline-none focus:border-blue-500 text-white resize-none transition-all"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 py-5 rounded-xl font-black uppercase tracking-[0.2em] text-[10px] text-white hover:bg-blue-500 transition-all flex items-center justify-center gap-3 shadow-lg shadow-blue-500/20">
+                        Connect via WhatsApp <i data-lucide="message-square" class="w-4 h-4"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="p-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-left">
+                <div class="text-3xl font-black italic uppercase text-white leading-none mb-2 text-center md:text-left">Ilhan Surya Fadhillah.</div>
+                <div class="text-[10px] font-mono text-blue-500 tracking-widest uppercase text-center md:text-left">Industrial Engineer // QA Specialist</div>
+            </div>
             
-            <!-- Clickable Footer Icons -->
-            <div class="flex space-x-6 mb-8">
-                <a href="https://wa.me/6285648531884" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#25d366] hover:text-white transition shadow-lg hover:-translate-y-1">
-                    <i class="fab fa-whatsapp text-xl"></i>
+            <!-- Tombol Footer dengan Warna & Animasi -->
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://www.linkedin.com/in/Ilhanfadhillah" target="_blank" 
+                   class="p-3 bg-[#0077B5]/10 rounded-lg border border-[#0077B5]/20 text-[#0077B5] hover:bg-[#0077B5] hover:text-white hover:scale-110 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 group shadow-lg shadow-[#0077B5]/5">
+                    <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    <span class="text-[9px] font-mono uppercase font-bold">LinkedIn</span>
                 </a>
-                <a href="https://linkedin.com/in/ilhanfadhillah" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#0077b5] hover:text-white transition shadow-lg hover:-translate-y-1">
-                    <i class="fab fa-linkedin text-xl"></i>
+                <a href="mailto:ilhanfadhillahh@gmail.com" 
+                   class="p-3 bg-red-500/10 rounded-lg border border-red-500/20 text-red-500 hover:bg-red-500 hover:text-white hover:scale-110 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 group shadow-lg shadow-red-500/5">
+                    <i data-lucide="mail" class="w-5 h-5"></i>
+                    <span class="text-[9px] font-mono uppercase font-bold">Email</span>
                 </a>
-                <a href="mailto:ilhanfadhillahh@gmail.com" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#ea4335] hover:text-white transition shadow-lg hover:-translate-y-1">
-                    <i class="fas fa-envelope text-xl"></i>
-                </a>
-                <a href="https://www.instagram.com/ilhan_fadhillah" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#E1306C] hover:text-white transition shadow-lg hover:-translate-y-1">
-                    <i class="fab fa-instagram text-xl"></i>
+                <a href="https://wa.me/6285648531884" target="_blank" 
+                   class="p-3 bg-emerald-500/10 rounded-lg border border-emerald-500/20 text-emerald-500 hover:bg-emerald-500 hover:text-white hover:scale-110 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 group shadow-lg shadow-emerald-500/5">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    <span class="text-[9px] font-mono uppercase font-bold">WhatsApp</span>
                 </a>
             </div>
 
-            <div class="font-industrial text-3xl font-bold text-gray-500 mb-4 tracking-widest">
-                ILHAN<span class="text-gray-700">SURYA</span>
+            <div class="text-right">
+                <div class="text-[10px] font-mono text-slate-700 tracking-[0.5em] uppercase text-center md:text-right">© 2026 // SYSTEM_STABLE</div>
             </div>
-            <p class="text-[10px] font-bold text-gray-600 uppercase tracking-[0.3em]">© 2026 ILHAN SURYA FADHILLAH. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/6285648531884?text=Halo%20Ilhan,%20saya%20melihat%20portofolio%20website%20Anda%20dan%20ingin%20berdiskusi." target="_blank" class="floating-wa" title="Hubungi Saya di WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <!-- AOS Animation Script -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Inisialisasi AOS Animation
-        AOS.init({
-            once: true, // Animasi hanya berjalan sekali saat di-scroll
-            offset: 100, // Jarak trigger animasi (px)
-            duration: 800, // Durasi standar
+        // Inisialisasi Ikon Lucide
+        lucide.createIcons();
+
+        // Responsive Cursor Glow Movement
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
         });
 
-        // Form to WhatsApp Logic
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        // Logika Perpindahan Tema
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                icon.setAttribute('data-lucide', 'moon');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                icon.setAttribute('data-lucide', 'sun');
+            }
+            lucide.createIcons();
+        }
+
+        // Integrasi Form ke WhatsApp
+        function sendWhatsApp(e) {
             e.preventDefault();
-            const name = document.getElementById('senderName').value;
-            const role = document.getElementById('senderRole').value;
-            const message = document.getElementById('senderMsg').value;
+            const name = document.getElementById('name').value;
+            const company = document.getElementById('company').value;
+            const message = document.getElementById('message').value;
             
-            // Format the text for WhatsApp URL
-            const waText = `Halo Ilhan, perkenalkan saya ${name}.%0A%0ATerkait: *${role}*.%0A%0A${message}`;
-            const waUrl = `https://wa.me/6285648531884?text=${waText}`;
-            
-            // Open WhatsApp in new tab
-            window.open(waUrl, '_blank');
-        });
+            const text = `Halo Ilhan,\n\nSaya ${name} dari ${company}.\n\n${message}`;
+            const url = `https://wa.me/6285648531884?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        }
     </script>
 </body>
 </html>
